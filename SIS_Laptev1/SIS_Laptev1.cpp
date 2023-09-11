@@ -1,20 +1,84 @@
-﻿// SIS_Laptev1.cpp : Этот файл содержит функцию "main". Здесь начинается и заканчивается выполнение программы.
-//
+﻿#include <iostream>
+#include <vector>
+#include <iomanip>
+#include <numeric>
+#include <algorithm>
 
-#include <iostream>
+using namespace std;
 
-int main()
-{
-    std::cout << "Hello World!\n";
+void disp(const vector<double>& arr) {
+    for (double x : arr) {
+        cout << fixed << setprecision(3) << x << " ";
+    }
+    cout << endl;
 }
 
-// Запуск программы: CTRL+F5 или меню "Отладка" > "Запуск без отладки"
-// Отладка программы: F5 или меню "Отладка" > "Запустить отладку"
+void add_element(vector<double>& arr) {
+    double sum = accumulate(arr.begin(), arr.end(), 0.0);
+    double avg = sum / arr.size();
+    arr.push_back(sum);
+    arr.push_back(avg);
+}
 
-// Советы по началу работы 
-//   1. В окне обозревателя решений можно добавлять файлы и управлять ими.
-//   2. В окне Team Explorer можно подключиться к системе управления версиями.
-//   3. В окне "Выходные данные" можно просматривать выходные данные сборки и другие сообщения.
-//   4. В окне "Список ошибок" можно просматривать ошибки.
-//   5. Последовательно выберите пункты меню "Проект" > "Добавить новый элемент", чтобы создать файлы кода, или "Проект" > "Добавить существующий элемент", чтобы добавить в проект существующие файлы кода.
-//   6. Чтобы снова открыть этот проект позже, выберите пункты меню "Файл" > "Открыть" > "Проект" и выберите SLN-файл.
+void min_multiply(vector<double>& arr) {
+    double min = *min_element(arr.begin(), arr.end());
+    for (double& x : arr) {
+        x *= min;
+    }
+}
+
+int menu(vector<double>& arr) {
+    int choice;
+    while (true) {
+        cin >> choice;
+        switch (choice) {
+        case 0:
+            return 0;
+        case 1:
+            double elem;
+            cin >> elem;
+            arr.push_back(elem);
+            cout << "+: " << arr.size() << endl;
+            disp(arr);
+            add_element(arr);
+            disp(arr);
+            min_multiply(arr);
+            disp(arr);
+            break;
+        case 2:
+            if (!arr.empty()) {
+                arr.pop_back();
+                cout << "-: " << arr.size() << endl;
+                disp(arr);
+                add_element(arr);
+                disp(arr);
+                min_multiply(arr);
+                disp(arr);
+            }
+            else {
+                cout << "Массив пуст, удаление невозможно." << endl;
+            }
+            break;
+        default:
+            cout << "Неверный выбор действия. Попробуйте еще раз." << endl;
+        }
+    }
+}
+
+int main() {
+    setlocale(LC_ALL, "Russian");
+    int n;
+    cin >> n;
+    vector<double> arr(n);
+    for (int i = 0; i < n; i++) {
+        cin >> arr[i];
+    }
+    cout << n << endl;
+    disp(arr);
+    add_element(arr);
+    disp(arr);
+    min_multiply(arr);
+    disp(arr);
+    menu(arr);
+    return 0;
+}
