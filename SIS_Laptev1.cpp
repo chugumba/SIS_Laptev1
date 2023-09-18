@@ -1,44 +1,42 @@
-﻿#include <iostream>
+#include <iostream>
 #include <vector>
 #include <iomanip>
 #include <numeric>
 #include <algorithm>
 
-using namespace std;
-
-void disp(const vector<double>& arr) {
+void disp(const std::vector<double>& arr) {
     for (double x : arr) {
-        cout << fixed << setprecision(3) << x << " ";
+        std::cout << std::fixed << std::setprecision(3) << x << " ";
     }
-    cout << endl;
+    std::cout << std::endl;
 }
 
-void add_element(vector<double>& arr) {
-    double sum = accumulate(arr.begin(), arr.end(), 0.0);
+void add_element(std::vector<double>& arr) {
+    double sum = std::accumulate(arr.begin(), arr.end(), 0.0);
     double avg = sum / arr.size();
     arr.push_back(sum);
     arr.push_back(avg);
 }
 
-void min_multiply(vector<double>& arr) {
-    double min = *min_element(arr.begin(), arr.end());
+void min_multiply(std::vector<double>& arr) {
+    double min = *std::min_element(arr.begin(), arr.end());
     for (double& x : arr) {
         x *= min;
     }
 }
 
-int menu(vector<double>& arr) {
+int menu(std::vector<double>& arr) {
     int choice;
     while (true) {
-        cin >> choice;
+        std::cin >> choice;
         switch (choice) {
         case 0:
             return 0;
         case 1:
             double elem;
-            cin >> elem;
+            std::cin >> elem;
             arr.push_back(elem);
-            cout << "+: " << arr.size() << endl;
+            std::cout << "+: " << arr.size() << std::endl;
             disp(arr);
             add_element(arr);
             disp(arr);
@@ -48,7 +46,7 @@ int menu(vector<double>& arr) {
         case 2:
             if (!arr.empty()) {
                 arr.pop_back();
-                cout << "-: " << arr.size() << endl;
+                std::cout << "-: " << arr.size() << std::endl;
                 disp(arr);
                 add_element(arr);
                 disp(arr);
@@ -56,11 +54,11 @@ int menu(vector<double>& arr) {
                 disp(arr);
             }
             else {
-                cout << "Массив пуст, удаление невозможно." << endl;
+                std::cout << "Массив пуст, удаление невозможно." << std::endl;
             }
             break;
         default:
-            cout << "Неверный выбор действия. Попробуйте еще раз." << endl;
+            std::cout << "Неверный выбор действия. Попробуйте еще раз." << std::endl;
         }
     }
 }
@@ -68,12 +66,12 @@ int menu(vector<double>& arr) {
 int main() {
     setlocale(LC_ALL, "Russian");
     int n;
-    cin >> n;
-    vector<double> arr(n);
+    std::cin >> n;
+    std::vector<double> arr(n);
     for (int i = 0; i < n; i++) {
-        cin >> arr[i];
+        std::cin >> arr[i];
     }
-    cout << n << endl;
+    std::cout << n << std::endl;
     disp(arr);
     add_element(arr);
     disp(arr);
